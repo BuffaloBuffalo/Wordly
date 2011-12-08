@@ -1,0 +1,15 @@
+Metadata-Version: 1.0
+Name: trie
+Version: 0.1.1
+Summary: A prefix tree (trie) implementation.
+Home-page: https://spideroak.com/code
+Author: David Hain
+Author-email: dhain@spideroak.com
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
