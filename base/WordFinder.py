@@ -9,66 +9,72 @@ class WordFinder:
 
     def findWords(self, stem, unusedLetters):
         words = []
-        children = self.spellingDictionary.dictionary.children(stem)
-        nextLetters = children.keys();
-        print "stem = ",stem," unused letters = ",unusedLetters," nextLetters = ",nextLetters
-        for nextLetter in nextLetters:
-            if nextLetter in unusedLetters:
-                #remove nextLetter from unusedLetters (and make a copy)
-                newUnusedLetters = list(unusedLetters)
-                print newUnusedLetters
-                newUnusedLetters.remove(nextLetter)
-                newStem = stem + nextLetter
-                
-                print newUnusedLetters
-                print newStem
-                if newUnusedLetters !=None:
-                    #recursion!
-                    print "recursion"
-                    words.extend(self.findWords(newStem, newUnusedLetters))    
-                try:
-                    newWord = self.spellingDictionary.dictionary[stem+nextLetter]
-                    words.append(newWord)
-                except KeyError:
-                    #nop
-                    print()
-                except NeedMore:
-                    #nop
-                    print()
-                    #how to handle case where the given stem is an actual word
+#        children = self.spellingDictionary.dictionary.children(stem)
+#        nextLetters = children.keys();
+        print "stem = ", stem, " unused letters = ", unusedLetters
+        #apparent children/keys is worthless and only gets immediate children with results ie dict.children('to') 
+        #doesn't give us the 'a' becuase 'toa' isn't a word
+        for nextLetter in unusedLetters:
+            #is stem+nextLetter a word?
+            try:
+                newWord = self.spellingDictionary.dictionary[stem + nextLetter]
+                words.append(newWord)
+            except KeyError:
+                #nop
+                print()
+            except NeedMore:
+                #nop
+                print()
+        
+            #brute force!
+            #create new stem, remove letter from unused letter, infinite recursion!
+            newUnusedLetters = list(unusedLetters)
+            newUnusedLetters.remove(nextLetter)
+            newStem = stem + nextLetter
+            if newUnusedLetters != None:
+                #recursion!
+                print "recursion"
+                words.extend(self.findWords(newStem, newUnusedLetters))    
         return words;
-
 
     def execute(self, tiles):
         wordList = []
-        print "tiles = ",tiles
+        print "tiles = ", tiles
         for letter in tiles:
             unusedLetters = list(tiles)
             unusedLetters.remove(letter)
-            print"calling findWords with ",letter," ",unusedLetters
+            print"calling findWords with ", letter, " ", unusedLetters
             foundWords = self.findWords(letter, unusedLetters)
             wordList.extend(foundWords)
         return wordList
-
-
-
-#how does the dictionary get bound to the word finding algorithm?
-wordFinder = WordFinder()
-#print wordFinder.spellingDictionary.dictionary['titte']
-#words = wordFinder.execute(["t", "o", "a", "d"])
-
-#words = wordFinder.findWords('t', ['o','a','d'])
-#print "words: "
-#for word in words:
-#    print word
     
-#print wordFinder.spellingDictionary.dictionary['t']
-#print wordFinder.spellingDictionary.dictionary['to']
-#print wordFinder.spellingDictionary.dictionary['toa']    
-#print wordFinder.spellingDictionary.dictionary['toad']
+def testToad():
+    wordFinder = WordFinder()
+    words = wordFinder.execute(["t", "o", "a", "d"])
+    print "words: "
+    for word in words:
+        print word
+        
+def testLettersT():
+    wordFinder = WordFinder()
+    words = wordFinder.findWords('t', ['o','a','d'])
+    print "words: "
+    for word in words:
+        print word
 
+def printTOAD():
+    wordFinder = WordFinder()
+    print wordFinder.spellingDictionary.dictionary['t']
+    print wordFinder.spellingDictionary.dictionary['to']
+    print wordFinder.spellingDictionary.dictionary['toa']    
+    print wordFinder.spellingDictionary.dictionary['toad']
 
-print wordFinder.spellingDictionary.dictionary.children('t')
-print wordFinder.spellingDictionary.dictionary.children('to')
-print wordFinder.spellingDictionary.dictionary.children('toa')    
-print wordFinder.spellingDictionary.dictionary.children('toad')
+def printTOADChildren():
+    wordFinder = WordFinder()
+    print wordFinder.spellingDictionary.dictionary.children('t')
+    print wordFinder.spellingDictionary.dictionary.children('to')
+    print wordFinder.spellingDictionary.dictionary.children('toa')    
+    print wordFinder.spellingDictionary.dictionary.children('toad')
+    
+    
+testToad()
