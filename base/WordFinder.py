@@ -77,4 +77,6 @@ def printTOADChildren():
     print wordFinder.spellingDictionary.dictionary.children('toad')
     
     
-testToad()
+#testToad()
+
+
