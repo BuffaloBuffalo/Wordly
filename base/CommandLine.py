@@ -1,5 +1,5 @@
-from base.WordFinder import WordFinder
-from base.ResultsManipulator import ResultsManipulator
+from base import WordFinder
+from base import ResultsManipulator
 print "Welcome to Wordly"
 print "Valid entry methods are space or comma delimited, or none at all, for example: 'aartgfd', 'a a r t g f d', or 'a,a,r,t,g,f,d' "
 print "Enter your tiles:"
